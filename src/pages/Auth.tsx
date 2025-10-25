@@ -17,11 +17,11 @@ const Auth = () => {
   const [role, setRole] = useState<"student" | "faculty" | "club">("student");
   
   // Login state
-  const [loginEmail, setLoginEmail] = useState("");
+  const [loginId, setLoginId] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
   
   // Signup state
-  const [signupEmail, setSignupEmail] = useState("");
+  const [signupId, setSignupId] = useState("");
   const [signupPassword, setSignupPassword] = useState("");
   const [fullName, setFullName] = useState("");
   
@@ -40,8 +40,11 @@ const Auth = () => {
     setLoading(true);
 
     try {
+      // Convert college ID to email format
+      const email = `${loginId}@kiit.ac.in`;
+      
       const { data, error } = await supabase.auth.signInWithPassword({
-        email: loginEmail,
+        email: email,
         password: loginPassword,
       });
 
@@ -69,9 +72,12 @@ const Auth = () => {
     setLoading(true);
 
     try {
+      // Convert college ID/roll number to email format
+      const email = `${signupId}@kiit.ac.in`;
+      
       // Create auth user
       const { data: authData, error: authError } = await supabase.auth.signUp({
-        email: signupEmail,
+        email: email,
         password: signupPassword,
         options: {
           emailRedirectTo: `${window.location.origin}/dashboard`,
@@ -86,7 +92,7 @@ const Auth = () => {
         .from("profiles")
         .insert({
           id: authData.user.id,
-          email: signupEmail,
+          email: email,
           full_name: fullName,
           role: role,
         });
@@ -101,6 +107,7 @@ const Auth = () => {
             id: authData.user.id,
             semester: parseInt(semester),
             branch: branch,
+            roll_number: signupId,
             interests: [],
             tokens: 0,
           });
@@ -127,7 +134,7 @@ const Auth = () => {
 
       toast({
         title: "Account created!",
-        description: "Please check your email to verify your account.",
+        description: "You can now log in with your credentials.",
       });
 
       navigate("/dashboard");
@@ -168,13 +175,15 @@ const Auth = () => {
           <TabsContent value="login">
             <form onSubmit={handleLogin} className="space-y-4">
               <div>
-                <Label htmlFor="login-email">Email</Label>
+                <Label htmlFor="login-id">
+                  {role === "student" ? "Roll Number" : role === "faculty" ? "Faculty ID" : "Club ID"}
+                </Label>
                 <Input
-                  id="login-email"
-                  type="email"
-                  placeholder="your.email@kiit.ac.in"
-                  value={loginEmail}
-                  onChange={(e) => setLoginEmail(e.target.value)}
+                  id="login-id"
+                  type="text"
+                  placeholder={role === "student" ? "e.g., 2054001" : role === "faculty" ? "FAC12345" : "CLUB001"}
+                  value={loginId}
+                  onChange={(e) => setLoginId(e.target.value)}
                   required
                 />
               </div>
@@ -232,13 +241,15 @@ const Auth = () => {
               </div>
 
               <div>
-                <Label htmlFor="signup-email">Email</Label>
+                <Label htmlFor="signup-id">
+                  {role === "student" ? "Roll Number" : role === "faculty" ? "Faculty ID" : "Club ID"}
+                </Label>
                 <Input
-                  id="signup-email"
-                  type="email"
-                  placeholder="your.email@kiit.ac.in"
-                  value={signupEmail}
-                  onChange={(e) => setSignupEmail(e.target.value)}
+                  id="signup-id"
+                  type="text"
+                  placeholder={role === "student" ? "e.g., 2054001" : role === "faculty" ? "FAC12345" : "CLUB001"}
+                  value={signupId}
+                  onChange={(e) => setSignupId(e.target.value)}
                   required
                 />
               </div>

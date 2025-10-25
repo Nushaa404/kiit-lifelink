@@ -6,7 +6,13 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import { Calendar, MessageSquare, Bell, Map, Award, LogOut, Book, Users } from "lucide-react";
+import { Calendar, MessageSquare, Bell, Map, Award, LogOut, Book, Users, Clock, Sparkles } from "lucide-react";
+import { EventsCalendar } from "@/components/EventsCalendar";
+import { Badge } from "@/components/ui/badge";
+import techFestImg from "@/assets/event-tech-fest.jpg";
+import culturalImg from "@/assets/event-cultural.jpg";
+import sportsImg from "@/assets/event-sports.jpg";
+import workshopImg from "@/assets/event-workshop.jpg";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -97,7 +103,7 @@ const Dashboard = () => {
         <div className="grid gap-6 mb-8">
           {/* Quick Stats */}
           <div className="grid md:grid-cols-4 gap-4">
-            <Card className="p-4 gradient-card hover-lift">
+            <Card className="p-4 gradient-card hover-lift animate-scale-in">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
                   <Calendar className="w-5 h-5 text-primary" />
@@ -109,7 +115,7 @@ const Dashboard = () => {
               </div>
             </Card>
             
-            <Card className="p-4 gradient-card hover-lift">
+            <Card className="p-4 gradient-card hover-lift animate-scale-in" style={{ animationDelay: "0.1s" }}>
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center">
                   <Bell className="w-5 h-5 text-accent" />
@@ -121,7 +127,7 @@ const Dashboard = () => {
               </div>
             </Card>
             
-            <Card className="p-4 gradient-card hover-lift">
+            <Card className="p-4 gradient-card hover-lift animate-scale-in" style={{ animationDelay: "0.2s" }}>
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
                   <Award className="w-5 h-5 text-primary" />
@@ -133,7 +139,7 @@ const Dashboard = () => {
               </div>
             </Card>
             
-            <Card className="p-4 gradient-card hover-lift">
+            <Card className="p-4 gradient-card hover-lift animate-scale-in" style={{ animationDelay: "0.3s" }}>
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center">
                   <Users className="w-5 h-5 text-accent" />
@@ -240,18 +246,109 @@ const Dashboard = () => {
                   </div>
                 </Card>
               </div>
+
+              {/* Featured Events - Poster Grid */}
+              <Card className="p-6">
+                <h3 className="text-2xl font-semibold mb-2 flex items-center gap-2">
+                  <Sparkles className="w-6 h-6 text-primary" />
+                  Upcoming Events
+                </h3>
+                <p className="text-muted-foreground mb-6">Don't miss out on these exciting campus events</p>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="group relative overflow-hidden rounded-lg border border-primary/20 hover:border-primary/40 transition-all hover:shadow-glow cursor-pointer">
+                    <img 
+                      src={techFestImg} 
+                      alt="TechFest 2025" 
+                      className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/50 to-transparent flex flex-col justify-end p-4">
+                      <Badge className="w-fit mb-2 bg-primary/20 text-primary border-primary/30">Tech Fest</Badge>
+                      <h4 className="font-bold text-lg">TechFest 2025</h4>
+                      <div className="flex items-center gap-3 text-sm text-muted-foreground mt-1">
+                        <span className="flex items-center gap-1">
+                          <Calendar className="w-3 h-3" />
+                          Oct 28
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Clock className="w-3 h-3" />
+                          10:00 AM
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="group relative overflow-hidden rounded-lg border border-purple-500/20 hover:border-purple-500/40 transition-all hover:shadow-glow cursor-pointer">
+                    <img 
+                      src={culturalImg} 
+                      alt="Cultural Fest" 
+                      className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/50 to-transparent flex flex-col justify-end p-4">
+                      <Badge className="w-fit mb-2 bg-purple-500/20 text-purple-500 border-purple-500/30">Cultural</Badge>
+                      <h4 className="font-bold text-lg">Cultural Fest</h4>
+                      <div className="flex items-center gap-3 text-sm text-muted-foreground mt-1">
+                        <span className="flex items-center gap-1">
+                          <Calendar className="w-3 h-3" />
+                          Oct 30
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Clock className="w-3 h-3" />
+                          5:00 PM
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="group relative overflow-hidden rounded-lg border border-orange-500/20 hover:border-orange-500/40 transition-all hover:shadow-glow cursor-pointer">
+                    <img 
+                      src={sportsImg} 
+                      alt="Sports Tournament" 
+                      className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/50 to-transparent flex flex-col justify-end p-4">
+                      <Badge className="w-fit mb-2 bg-orange-500/20 text-orange-500 border-orange-500/30">Sports</Badge>
+                      <h4 className="font-bold text-lg">Sports Tournament</h4>
+                      <div className="flex items-center gap-3 text-sm text-muted-foreground mt-1">
+                        <span className="flex items-center gap-1">
+                          <Calendar className="w-3 h-3" />
+                          Nov 2
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Clock className="w-3 h-3" />
+                          8:00 AM
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="group relative overflow-hidden rounded-lg border border-primary/20 hover:border-primary/40 transition-all hover:shadow-glow cursor-pointer">
+                    <img 
+                      src={workshopImg} 
+                      alt="AI Workshop" 
+                      className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/50 to-transparent flex flex-col justify-end p-4">
+                      <Badge className="w-fit mb-2 bg-primary/20 text-primary border-primary/30">Workshop</Badge>
+                      <h4 className="font-bold text-lg">AI Workshop</h4>
+                      <div className="flex items-center gap-3 text-sm text-muted-foreground mt-1">
+                        <span className="flex items-center gap-1">
+                          <Calendar className="w-3 h-3" />
+                          Nov 5
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Clock className="w-3 h-3" />
+                          2:00 PM
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Card>
             </TabsContent>
 
             {/* Calendar Tab */}
             <TabsContent value="calendar">
-              <Card className="p-6">
-                <h3 className="text-2xl font-semibold mb-4">Event Calendar</h3>
-                <p className="text-muted-foreground">Interactive calendar showing all campus events, classes, and deadlines.</p>
-                <div className="mt-8 text-center py-12 bg-muted/30 rounded-lg">
-                  <Calendar className="w-16 h-16 mx-auto text-primary mb-4" />
-                  <p className="text-lg">Calendar view coming soon...</p>
-                </div>
-              </Card>
+              <EventsCalendar />
             </TabsContent>
 
             {/* Forums Tab */}
